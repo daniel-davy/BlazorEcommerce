@@ -45,10 +45,10 @@ namespace EcommerceBlazor.Server.Controllers
             return Ok(response);
         }
 
-		[HttpPost("change-password"), Authorize] //only authorized users can call\
+		[HttpPost("change-password"), Authorize] //only authorized users can call
         public async Task<ActionResult<ServiceResponse<bool>>> ChangePassword([FromBody] string newPassword)
 		{
-            //getting the user and then an Id
+            //getting the user and then the Id
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var response = await _authService.ChangePassword(int.Parse(userId), newPassword);
 

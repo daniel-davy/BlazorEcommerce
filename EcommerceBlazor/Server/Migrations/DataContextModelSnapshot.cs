@@ -141,6 +141,28 @@ namespace EcommerceBlazor.Server.Migrations
                         });
                 });
 
+            modelBuilder.Entity("EcommerceBlazor.Shared.Image", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Data")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Images");
+                });
+
             modelBuilder.Entity("EcommerceBlazor.Shared.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -641,6 +663,13 @@ namespace EcommerceBlazor.Server.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("EcommerceBlazor.Shared.Image", b =>
+                {
+                    b.HasOne("EcommerceBlazor.Shared.Product", null)
+                        .WithMany("Images")
+                        .HasForeignKey("ProductId");
+                });
+
             modelBuilder.Entity("EcommerceBlazor.Shared.OrderItem", b =>
                 {
                     b.HasOne("EcommerceBlazor.Shared.Order", "Order")
@@ -705,6 +734,8 @@ namespace EcommerceBlazor.Server.Migrations
 
             modelBuilder.Entity("EcommerceBlazor.Shared.Product", b =>
                 {
+                    b.Navigation("Images");
+
                     b.Navigation("Variants");
                 });
 
